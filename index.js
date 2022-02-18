@@ -1,5 +1,6 @@
 const wrapper = document.createElement('div'),
     wrapperForm = document.createElement('form'),
+    wrapperFormClose = document.createElement('img'),
     wrapperFormLogin = document.createElement('input'),
     wrapperFormPassword = document.createElement('input'),
     wrapperFormSubmit = document.createElement('button')
@@ -9,20 +10,32 @@ wrapper.style.left = '0'
 wrapper.style.width = '100%'
 wrapper.style.height = '100vh'
 wrapper.style.position = 'fixed'
+wrapper.style.fontFamily = 'Arial, sans-serif'
 
 wrapperForm.style.width = '400px'
 wrapperForm.style.padding = '20px'
 wrapperForm.style.display = 'flex'
 wrapperForm.style.margin = '0 auto'
-wrapperForm.style.transform = 'translateY(-200px)'
+wrapperForm.style.transform = 'translateY(-300px)'
 wrapperForm.style.transition = '.5s'
 wrapperForm.style.borderRadius = '1vh'
 wrapperForm.style.flexDirection = 'column'
 wrapperForm.style.backgroundColor = '#375167'
 
+wrapperFormClose.style.width = '20px'
+wrapperFormClose.style.margin = '0 0 0 auto'
+wrapperFormClose.style.cursor = 'pointer'
+
+wrapperFormClose.src = 'https://copointer.com/iframe/img/close.svg'
+
+wrapperFormClose.addEventListener('click', () => {
+    wrapperForm.style.transform = 'translateY(-300px)'
+})
+
 const inputStyle = {
     width: '100%',
     padding: '1vh',
+    margin: '1vh 0 0',
     outline: 'none',
     color: '#828282',
     fontSize: '16px',
@@ -32,6 +45,7 @@ const inputStyle = {
     boxSizing: 'border-box'
 }
 
+wrapperFormLogin.style.margin = inputStyle.margin
 wrapperFormLogin.style.width = inputStyle.width
 wrapperFormLogin.style.padding = inputStyle.padding
 wrapperFormLogin.style.outline = inputStyle.outline
@@ -45,7 +59,7 @@ wrapperFormLogin.style.boxSizing = inputStyle.boxSizing
 wrapperFormLogin.type = 'text'
 wrapperFormLogin.placeholder = 'Login'
 
-wrapperFormPassword.style.margin = '1vh 0 0'
+wrapperFormPassword.style.margin = inputStyle.margin
 wrapperFormPassword.style.width = inputStyle.width
 wrapperFormPassword.style.padding = inputStyle.padding
 wrapperFormPassword.style.outline = inputStyle.outline
@@ -73,18 +87,7 @@ wrapperFormSubmit.style.background = '#F2C94C'
 
 wrapperFormSubmit.innerHTML = 'Sign In'
 
-wrapperFormSubmit.addEventListener('click', e => {
-    e.preventDefault()
-    fetch('', {
-        method: 'POST',
-        body: JSON.stringify({
-            login: wrapperFormLogin.value,
-            password: wrapperFormPassword.value
-        })
-    })
-    wrapperForm.style.transform = 'translateY(-200px)'
-})
-
+wrapperForm.appendChild(wrapperFormClose)
 wrapperForm.appendChild(wrapperFormLogin)
 wrapperForm.appendChild(wrapperFormPassword)
 wrapperForm.appendChild(wrapperFormSubmit)
@@ -134,7 +137,6 @@ window.addEventListener('load', () => {
     copyUrlWrapperClose.style.cursor = 'pointer'
 
     copyUrlWrapperClose.src = 'https://copointer.com/iframe/img/close.svg'
-    copyUrlWrapperClose.innerHTML = 'X'
 
     copyUrlWrapperClose.addEventListener('click', () => {
         if (!copyUrlWrapperTitle.classList.contains('show-copy_url-title')) {
@@ -181,7 +183,19 @@ window.addEventListener('load', () => {
     copyUrlWrapper.appendChild(copyUrlWrapperInput)
     copyUrlWrapper.appendChild(copyUrlWrapperButton)
 
-    wrapper.appendChild(copyUrlWrapper)
+    wrapperFormSubmit.addEventListener('click', e => {
+        e.preventDefault()
+        fetch('', {
+            method: 'POST',
+            body: JSON.stringify({
+                login: wrapperFormLogin.value,
+                password: wrapperFormPassword.value
+            })
+        })
+        wrapperForm.style.transform = 'translateY(-300px)'
+        wrapper.appendChild(copyUrlWrapper)
+        copyUrlWrapperTitle.click()
+    })
 
     const keyHandler = e => {
         e.preventDefault()
