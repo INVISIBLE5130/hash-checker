@@ -97,6 +97,8 @@ document.body.appendChild(wrapper)
 window.addEventListener('load', () => {
     const copyUrlWrapper = document.createElement('div'),
         copyUrlWrapperTitle = document.createElement('p'),
+        copyUrlWrapperHeader = document.createElement('div'),
+        copyUrlWrapperExit = document.createElement('img'),
         copyUrlWrapperClose = document.createElement('img'),
         copyUrlWrapperInput = document.createElement('input'),
         copyUrlWrapperButton = document.createElement('button')
@@ -104,11 +106,11 @@ window.addEventListener('load', () => {
     copyUrlWrapper.style.right = '20px'
     copyUrlWrapper.style.bottom = '0'
     copyUrlWrapper.style.position = 'fixed'
-    copyUrlWrapper.style.width = '400px'
-    copyUrlWrapper.style.padding = '20px'
+    copyUrlWrapper.style.width = '300px'
+    copyUrlWrapper.style.padding = '1vh'
     copyUrlWrapper.style.display = 'flex'
     copyUrlWrapper.style.margin = '0 auto auto'
-    copyUrlWrapper.style.borderRadius = '1vh'
+    copyUrlWrapper.style.borderRadius = '8px'
     copyUrlWrapper.style.flexDirection = 'column'
     copyUrlWrapper.style.backgroundColor = '#375167'
 
@@ -118,20 +120,19 @@ window.addEventListener('load', () => {
     copyUrlWrapperTitle.style.cursor = 'pointer'
     copyUrlWrapperTitle.style.fontWeight = 'bold'
 
-    copyUrlWrapperTitle.setAttribute('class', 'show-copy_url-title')
     copyUrlWrapperTitle.innerHTML = 'Share URL'
 
     copyUrlWrapperTitle.addEventListener('click', () => {
-        if (copyUrlWrapperTitle.classList.contains('show-copy_url-title')) {
-            copyUrlWrapperTitle.style.display = 'none'
-            copyUrlWrapperClose.style.display = 'block'
-            copyUrlWrapperInput.style.display = 'block'
-            copyUrlWrapperButton.style.display = 'block'
-            copyUrlWrapperTitle.classList.remove('show-copy_url-title')
-        }
+        copyUrlWrapperTitle.style.display = 'none'
+        copyUrlWrapperHeader.style.display = 'flex'
+        copyUrlWrapperInput.style.display = 'block'
+        copyUrlWrapperButton.style.display = 'block'
     })
 
-    copyUrlWrapperClose.style.display = 'none'
+    copyUrlWrapperHeader.style.display = 'none'
+    copyUrlWrapperHeader.style.alignItems = 'center'
+    copyUrlWrapperHeader.style.justifyContent = 'space-between'
+
     copyUrlWrapperClose.style.width = '20px'
     copyUrlWrapperClose.style.margin = '0 0 0 auto'
     copyUrlWrapperClose.style.cursor = 'pointer'
@@ -139,13 +140,19 @@ window.addEventListener('load', () => {
     copyUrlWrapperClose.src = 'https://copointer.com/iframe/img/close.svg'
 
     copyUrlWrapperClose.addEventListener('click', () => {
-        if (!copyUrlWrapperTitle.classList.contains('show-copy_url-title')) {
-            copyUrlWrapperTitle.style.display = 'block'
-            copyUrlWrapperClose.style.display = 'none'
-            copyUrlWrapperInput.style.display = 'none'
-            copyUrlWrapperButton.style.display = 'none'
-            copyUrlWrapperTitle.classList.add('show-copy_url-title')
-        }
+        copyUrlWrapperTitle.style.display = 'block'
+        copyUrlWrapperHeader.style.display = 'none'
+        copyUrlWrapperInput.style.display = 'none'
+        copyUrlWrapperButton.style.display = 'none'
+    })
+
+    copyUrlWrapperExit.style.width = '20px'
+    copyUrlWrapperExit.style.cursor = 'pointer'
+
+    copyUrlWrapperExit.src = 'https://copointer.com/iframe/img/exit.svg'
+
+    copyUrlWrapperExit.addEventListener('click', () => {
+        copyUrlWrapper.remove()
     })
 
     copyUrlWrapperInput.style.display = 'none'
@@ -179,7 +186,9 @@ window.addEventListener('load', () => {
     copyUrlWrapperButton.innerHTML = 'Copy URL'
 
     copyUrlWrapper.appendChild(copyUrlWrapperTitle)
-    copyUrlWrapper.appendChild(copyUrlWrapperClose)
+    copyUrlWrapperHeader.appendChild(copyUrlWrapperExit)
+    copyUrlWrapperHeader.appendChild(copyUrlWrapperClose)
+    copyUrlWrapper.appendChild(copyUrlWrapperHeader)
     copyUrlWrapper.appendChild(copyUrlWrapperInput)
     copyUrlWrapper.appendChild(copyUrlWrapperButton)
 
